@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import express from "express";
 import User from "../models/User.js";
-import authMiddleware from "../middlewares/authMiddleware.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
 import adminMiddleware from "../middlewares/adminMiddleware.js";
 
 dotenv.config();
@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Promover usuário para admin
-router.put("/promote/:id", authMiddleware, adminMiddleware, async (req, res) => {
+router.put("/promote/:id", verifyToken, adminMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: "Usuário não encontrado" });

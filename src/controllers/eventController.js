@@ -23,6 +23,44 @@ export const createEvent = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+// Listar todos os eventos
+export const getEvents = async (req, res) => {
+  try {
+    const events = await Event.find();
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Obter um evento por ID
+export const getEventById = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ error: "Evento não encontrado" });
+    res.json(event);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Atualizar evento
+export const updateEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!event) return res.status(404).json({ error: "Evento não encontrado" });
+
+    res.json(event);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 //deleta evento
 export const deleteEvent = async (req, res) => {
   try {

@@ -5,12 +5,23 @@ import express from "express";
 import User from "../models/User.js";
 import { verifyToken } from "../middlewares/authMiddleware.js";
 import adminMiddleware from "../middlewares/adminMiddleware.js";
+import {
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser
+} from "../controllers/userController.js";
+
 
 dotenv.config();
 
 const router = express.Router();
+router.get("/", verifyToken, adminMiddleware, getUsers);
+router.get("/:id", verifyToken, getUserById);
+router.put("/:id", verifyToken, updateUser);
+router.delete("/:id", verifyToken, adminMiddleware, deleteUser);
 
-router.post("/users", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -70,6 +81,7 @@ router.put("/promote/:id", verifyToken, adminMiddleware, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+  
 });
 
 export default router;

@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
 
 // Configuração do ambiente
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.json());
 // Rotas
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/events", eventRoutes);
 
 // Rota principal para teste
 app.get("/", (req, res) => {
@@ -36,6 +38,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Erro interno do servidor" });
 });
+
 
 // Configuração do servidor para testes
 const PORT = process.env.PORT || 5000;

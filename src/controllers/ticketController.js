@@ -59,6 +59,22 @@ export const getTicketById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+// Atualizar ticket
+export const updateTicket = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const ticket = await Ticket.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!ticket) return res.status(404).json({ error: "Ticket não encontrado" });
+
+    res.json(ticket);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 // Excluir um ticket
 export const deleteTicket = async (req, res) => {

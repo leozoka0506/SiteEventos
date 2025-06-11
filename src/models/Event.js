@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Define o schema (esquema) para a coleção de eventos
 const eventSchema = new mongoose.Schema(
   {
     title: { 

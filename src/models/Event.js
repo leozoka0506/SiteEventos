@@ -9,12 +9,14 @@ const eventSchema = new mongoose.Schema(
       required: [true, "O título do evento é obrigatório"], // Mensagem personalizada se não for fornecido
       minlength: [5, "O título deve ter pelo menos 5 caracteres"] // Validação de comprimento mínimo
     },
+    // Campo obrigatório: data do evento
     date: { 
       type: Date, 
       required: [true, "A data do evento é obrigatória"],
       validate: {
+        // Valida se a data informada é futura
         validator: (value) => value > new Date(),
-        message: "A data do evento deve ser no futuro"
+        message: "A data do evento deve ser no futuro" // Mensagem de erro personalizada
       }
     },
     location: { 

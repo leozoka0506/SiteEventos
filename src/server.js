@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
+import ticketRoutes from "./routes/ticketRoutes.js";
 
 // Carrega variáveis de ambiente do arquivo .env para process.env
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);    // Rotas de autenticação (login, registro etc)
 app.use("/api/users", userRoutes);   // Rotas para manipulação de usuários (CRUD)
 app.use("/api/events", eventRoutes); // Rotas para manipulação de eventos
+app.use("/api/tickets", ticketRoutes); //Rotas para manipulação de tickets
 
 // Rota raiz simples para testar se a API está online
 app.get("/", (req, res) => {

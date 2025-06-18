@@ -1,7 +1,4 @@
 import express from "express";
-import { createTicket, getTickets } from "../controllers/ticketController.js";
-import authMiddleware from "../middlewares/authMiddleware.js";
-import express from "express";
 import {
   createTicket,
   getTickets,
@@ -9,15 +6,23 @@ import {
   updateTicket,
   deleteTicket
 } from "../controllers/ticketController.js";
-import authMiddleware from "../middlewares/authMiddleware.js";
+import { verifyToken } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
-router.post("/", authMiddleware, createTicket);
+
+// Criar ticket (usuário autenticado)
+router.post("/", verifyToken, createTicket);
+
+// Listar todos os tickets
 router.get("/", getTickets);
+
+// Obter um ticket por ID
 router.get("/:id", getTicketById);
-router.put("/:id", authMiddleware, updateTicket);
-router.delete("/:id", authMiddleware, deleteTicket);
-router.post("/", authMiddleware, createTicket); // Agora só usuários autenticados podem criar tickets
-router.get("/", getTickets);
+
+// Atualizar um ticket (usuário autenticado)
+router.put("/:id", verifyToken, updateTicket);
+
+// Deletar um ticket (usuário autenticado)
+router.delete("/:id", verifyToken, deleteTicket);
 
 export default router;

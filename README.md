@@ -1,93 +1,65 @@
-SiteEventos
-Este é um projeto de site para gerenciamento de eventos, desenvolvido utilizando JavaScript.
+Event API
 
-Estrutura do Projeto
-src/: Contém os arquivos-fonte do projeto.
+Uma API RESTful para gerenciamento de eventos, usuários e tickets. Desenvolvida com Node.js, Express e MongoDB.
 
-node_modules/: Diretório de dependências gerenciadas pelo npm.
+📋 Funcionalidades
 
-.env: Arquivo para variáveis de ambiente.
-
-package.json: Arquivo de configuração do projeto, incluindo scripts e dependências.
-
-package-lock.json: Arquivo que registra as versões exatas das dependências instaladas.
+- Autenticação de usuários (JWT)
+- Criação, listagem, atualização e exclusão de eventos
+- Compra de tickets associando usuários e eventos
+- Controle de permissões (usuário e admin)
+- Validação de dados com express-validator
+- Cobertura de testes com Jest e Supertest
 
 Tecnologias Utilizadas
-JavaScript
 
-Node.js
+- Node.js
+- Express
+- MongoDB com Mongoose
+- JWT para autenticação
+- Bcryptjs para hash de senhas
+- Express Validator
+- Jest + Supertest (testes automatizados)
+- Dotenv para variáveis de ambiente
 
-Como Executar
-Clone o repositório:
+Como Rodar o Projeto
 
-git clone https://github.com/leozoka0506/SiteEventos.git
-Navegue até o diretório do projeto:
+1. Clone o repositório:
+bash
+git clone https://github.com/seu-usuario/event-api.git
+cd event-api
 
-cd SiteEventos
 Instale as dependências:
-
 npm install
-Inicie o projeto:
 
-npm start
-Contribuição
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests
+Crie um arquivo .env com as variáveis:MONGO_URI=mongodb+srv://<usuario>:<senha>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
+JWT_SECRET=sua_chave_secreta
+PORT=5000
 
-estrutura de projeto (2025/05/08): 
-src/
-├── models/           # Schemas do MongoDB (Eventos, Usuários, Tickets)
-├── controllers/      # Lógica de negócio (Eventos, Autenticação)
-├── middlewares/      # Validação e autorização
-├── config/           # Configuração do banco de dados
-.env                  # Variáveis de ambiente (MongoDB, JWT)
+Execute o servidor:
+npm run dev
 
-Permissões
+Endpoints Principais:
+| Método | Rota                    | Descrição                        | Protegida |
+| ------ | ----------------------- | -------------------------------- | --------- |
+| POST   | /api/auth/register      | Registrar novo usuário           | ❌         |
+| POST   | /api/auth/login         | Login de usuário                 | ❌         |
+| GET    | /api/users              | Listar todos os usuários (admin) | ✅         |
+| PUT    | /api/users/promote/\:id | Promover usuário a admin         | ✅ admin   |
+| GET    | /api/events             | Listar eventos                   | ❌         |
+| POST   | /api/events             | Criar novo evento                | ✅ admin   |
+| POST   | /api/tickets            | Comprar ticket                   | ✅         |
 
-    Rotas administrativas usam o middleware adminMiddleware (usuário precisa ter role: "admin" no banco).
+Estrutura de Entidades
+User: name, email, password, role (user/admin)
 
-    Inclua o token JWT no header Authorization para rotas protegidas.
+Event: title, date, location
 
-Segurança
+Ticket: userId, eventId, price
+Integrantes
+Leonardo (desenvolvedor principal)
+Samuel(testes e integração final)
+Tito(Documentação)
 
-    Rotas administrativas requerem role admin no banco de dados
-
-    Sempre utilize HTTPS em produção para mitigar riscos de MITM, injeções SQL e invasões comuns pela porta 22
-
-    Tokens JWT têm validade de 1 hora (configurável no código)
-
-
-funções básicas de como criar e registrar um evento: 
-
-curl -X POST http://localhost:3000/api/events \
--H "Authorization: Bearer SEU_TOKEN_JWT" \
--H "Content-Type: application/json" \
--d '{
-  "title": "Conferência de TI",
-  "date": "2024-10-20",
-  "location": "Auditório Principal"
-}'
-
-
-
-curl -X POST http://localhost:3000/api/auth/register \
--H "Content-Type: application/json" \
--d '{
-  "name": "Ana Costa",
-  "email": "ana@exemplo.com",
-  "password": "senhaSegura123"
-}'
-
-Licença
-Este projeto está licenciado sob a MIT License.
-
-
-
-Raw Docs:
-
-
-
-
-
-
-
-
+Link para o vídeo de apresentação:
+https://youtu.be/fxwgV1JEj9M

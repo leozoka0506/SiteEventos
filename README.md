@@ -2,7 +2,7 @@ Event API
 
 Uma API RESTful para gerenciamento de eventos, usuários e tickets. Desenvolvida com Node.js, Express e MongoDB.
 
-📋 Funcionalidades
+Funcionalidades
 
 - Autenticação de usuários (JWT)
 - Criação, listagem, atualização e exclusão de eventos
